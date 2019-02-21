@@ -111,8 +111,16 @@ export default class QrScanner {
     }
 
     /* async */
-    static scanImage(imageOrFileOrUrl, sourceRect=null, worker=null, canvas=null, fixedCanvasSize=false,
-                     alsoTryWithoutSourceRect=false) {
+    static scanImage(imageOrFileOrUrl, options) {
+        const defaultOptions = {
+            sourceRect: null,
+            worker: null,
+            canvas: null,
+            fixedCanvasSize: false,
+            alsoTryWithoutSourceRect: false,
+            scanTimeout: 5000
+        };
+        let { sourceRect, worker, canvas, fixedCanvasSize, alsoTryWithoutSourceRect, scanTimeout } = Object.assign(defaultOptions, options);
         let createdNewWorker = false;
         let promise = new Promise((resolve, reject) => {
             if (!worker) {
@@ -143,7 +151,7 @@ export default class QrScanner {
             };
             worker.addEventListener('message', onMessage);
             worker.addEventListener('error', onError);
-            timeout = setTimeout(() => onError('timeout'), 3000);
+            timeout = setTimeout(() => onError('timeout'), scanTimeout);
             QrScanner._loadImage(imageOrFileOrUrl).then(image => {
                 const imageData = QrScanner._getImageData(image, sourceRect, canvas, fixedCanvasSize);
                 worker.postMessage({
@@ -154,7 +162,12 @@ export default class QrScanner {
         });
 
         if (sourceRect && alsoTryWithoutSourceRect) {
-            promise = promise.catch(() => QrScanner.scanImage(imageOrFileOrUrl, null, worker, canvas, fixedCanvasSize));
+            promise = promise.catch(() => QrScanner.scanImage(imageOrFileOrUrl, {
+                sourceRect: null,
+                worker,
+                canvas,
+                fixedCanvasSize
+            }));
         }
 
         promise = promise.finally(() => {
@@ -211,7 +224,12 @@ export default class QrScanner {
         if (!this._active || this.$video.paused || this.$video.ended) return false;
         // using requestAnimationFrame to avoid scanning if tab is in background
         requestAnimationFrame(() => {
-            QrScanner.scanImage(this.$video, this._sourceRect, this._qrWorker, this.$canvas, true)
+            QrScanner.scanImage(this.$video, {
+                sourceRect: this._sourceRect,
+                worker: this._qrWorker,
+                canvas: this.$canvas,
+                fixedCanvasSize: true
+            })
                 .then(this._onDecode, error => {
                     if (this._active && error !== 'QR code not found.') {
                         console.error(error);

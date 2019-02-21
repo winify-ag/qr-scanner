@@ -1,6 +1,15 @@
 // Type definitions for qr-scanner
-// Project: @nimiq/qr-scanner
-// Definitions by: Nimiq <www.nimiq.com>
+// Project: @winify/qr-scanner
+// Definitions by: Winify AG <winify.com>
+
+declare type ScannerOptions = {
+    sourceRect?: QrScanner.SourceRect | null;
+    worker?: Worker | null;
+    canvas?: HTMLCanvasElement | null;
+    fixedCanvasSize?: boolean;
+    alsoTryWithoutSourceRect?: boolean;
+    scanTimeout?: number;
+}
 
 declare class QrScanner {
     static DEFAULT_CANVAS_SIZE: number;
@@ -18,11 +27,7 @@ declare class QrScanner {
     setInversionMode(inversionMode: QrScanner.InversionMode): void;
     static scanImage(
         imageOrFileOrUrl: HTMLCanvasElement | HTMLVideoElement | ImageBitmap | HTMLImageElement | File | URL | String,
-        sourceRect?: QrScanner.SourceRect | null,
-        worker?: Worker | null,
-        canvas?: HTMLCanvasElement | null,
-        fixedCanvasSize?: boolean,
-        alsoTryWithoutSourceRect?: boolean
+        options?: ScannerOptions
     ): Promise<string>;
 }
 

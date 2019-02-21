@@ -1,6 +1,6 @@
 {
-  "name": "qr-scanner",
-  "version": "1.1.1",
+  "name": "@winify/qr-scanner",
+  "version": "1.2.1",
   "description": "A javascript QR scanner library",
   "main": "qr-scanner.min.js",
   "browser": "qr-scanner.min.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nimiq/qr-scanner.git"
+    "url": "git+https://github.com/winify-ag/qr-scanner.git"
   },
   "keywords": [
     "qr",
@@ -33,14 +33,15 @@
     "fast",
     "web"
   ],
-  "author": "Nimiq (https://nimiq.com)",
+  "author": "Winify AG",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nimiq/qr-scanner/issues"
+    "url": "https://github.com/winify-ag/qr-scanner/issues"
   },
-  "homepage": "https://github.com/nimiq/qr-scanner#readme",
+  "homepage": "https://github.com/winify-ag/qr-scanner#readme",
   "devDependencies": {
     "@ampproject/rollup-plugin-closure-compiler": "^0.8.5",
+    "acorn": "^6.1.0",
     "google-closure-compiler": "^20171112.0.0",
     "jsqr-es6": "^1.2.0-2",
     "rollup": "^1.1.2",
