@@ -28,6 +28,7 @@ export default class QrScanner {
         this._onCanPlay = this._onCanPlay.bind(this);
         this._onPlay = this._onPlay.bind(this);
         this._onVisibilityChange = this._onVisibilityChange.bind(this);
+        this._scanFrame = this._scanFrame.bind(this);
 
         this.$video.addEventListener('canplay', this._onCanPlay);
         this.$video.addEventListener('play', this._onPlay);
@@ -235,7 +236,7 @@ export default class QrScanner {
                         console.error(error);
                     }
                 })
-                .then(() => this._scanFrame());
+                .then(() => setTimeout(this._scanFrame, 100));
         });
     }
 
