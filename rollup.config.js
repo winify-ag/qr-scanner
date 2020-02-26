@@ -13,7 +13,7 @@ export default [{
     plugins: [
         closureCompiler({
             language_in: 'ECMASCRIPT6',
-            language_out: 'ECMASCRIPT6',
+            language_out: 'ECMASCRIPT5',
             rewrite_polyfills: false,
         })
     ]
@@ -32,7 +32,7 @@ export default [{
             //compilation_level: 'ADVANCED',
             //warning_level: 'QUIET',
             language_in: 'ECMASCRIPT6',
-            language_out: 'ECMASCRIPT6',
+            language_out: 'ECMASCRIPT5',
             rewrite_polyfills: false,
         }),
     ]
